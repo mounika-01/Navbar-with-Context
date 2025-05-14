@@ -1,6 +1,8 @@
-// index.js
+// Write your code here
+// Write your code here
 import {Link} from 'react-router-dom'
-import {ThemeContext} from '../../context/ThemeContext'
+
+import ThemeContext from '../../context/ThemeContext'
 
 import './index.css'
 
@@ -9,38 +11,55 @@ const Navbar = () => (
     {value => {
       const {isDarkTheme, toggleTheme} = value
 
-      // Dynamic class and assets based on theme
-      const themeClass = isDarkTheme ? 'dark' : 'light'
-      const logoUrl = isDarkTheme
-        ? 'https://assets.ccbp.in/frontend/react-js/website-logo-dark-theme-img.png'
-        : 'https://assets.ccbp.in/frontend/react-js/website-logo-light-theme-img.png'
-      const themeIconUrl = isDarkTheme
+      const onToggleTheme = () => {
+        toggleTheme()
+      }
+
+      const themeImageURL = isDarkTheme
         ? 'https://assets.ccbp.in/frontend/react-js/light-theme-img.png'
         : 'https://assets.ccbp.in/frontend/react-js/dark-theme-img.png'
 
+      const navbarBgClassName = isDarkTheme
+        ? 'navbar-bg-dark'
+        : 'navbar-bg-light'
+
+      const websiteLogoImageURL = isDarkTheme
+        ? 'https://assets.ccbp.in/frontend/react-js/website-logo-dark-theme-img.png'
+        : 'https://assets.ccbp.in/frontend/react-js/website-logo-light-theme-img.png'
+
+      const navItemClassName = isDarkTheme
+        ? 'list-text-dark-theme'
+        : 'list-text-light-theme'
+
       return (
-        <div className={`nav-bar-container-${themeClass}`}>
-          <img src={logoUrl} className="website-logo" alt="website logo" />
-          <ul className="middle-items">
-            <li className="list-item">
-              <Link to="/" className={`link-${themeClass}`}>
-                Home
-              </Link>
-            </li>
-            <li className="list-item">
-              <Link to="/about" className={`link-${themeClass}`}>
-                About
-              </Link>
-            </li>
-          </ul>
-           <button
-   type="button"
-   className="theme-button"
-   data-testid="theme" // Add this line
-   onClick={toggleTheme}
- >
-   <img src={themeIconUrl} className="theme-img" alt="theme" />
- </button>
+        <div className={`navbar ${navbarBgClassName}`}>
+          <div className="navbar-content">
+            <img
+              className="website-logo"
+              src={websiteLogoImageURL}
+              alt="website logo"
+            />
+            <ul className="nav-menu">
+              <li className="nav-menu-item">
+                <Link to="/" className={`nav-link ${navItemClassName}`}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav-menu-item">
+                <Link to="/about" className={`nav-link ${navItemClassName}`}>
+                  About
+                </Link>
+              </li>
+            </ul>
+            <button
+              data-testid="theme"
+              className="theme-button"
+              type="button"
+              onClick={onToggleTheme}
+            >
+              <img className="theme-image" src={themeImageURL} alt="theme" />
+            </button>
+          </div>
         </div>
       )
     }}
