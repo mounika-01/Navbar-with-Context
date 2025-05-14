@@ -1,40 +1,34 @@
-import React from 'react'
-import {ThemeContext} from '../../context/ThemeContext'
+// Write your code here
+import ThemeContext from '../../context/ThemeContext'
+
+import Navbar from '../Navbar'
+
 import './index.css'
 
 const About = () => (
   <ThemeContext.Consumer>
     {value => {
-      const {isDarkTheme, toggleTheme} = value
+      const {isDarkTheme} = value
 
-      const aboutImageUrl = isDarkTheme
+      const aboutBgClassName = isDarkTheme ? 'about-bg-dark' : 'about-bg-light'
+
+      const aboutImageURL = isDarkTheme
         ? 'https://assets.ccbp.in/frontend/react-js/about-dark-img.png'
         : 'https://assets.ccbp.in/frontend/react-js/about-light-img.png'
 
-      const themeIconUrl = isDarkTheme
-        ? 'https://assets.ccbp.in/frontend/react-js/light-theme-img.png'
-        : 'https://assets.ccbp.in/frontend/react-js/dark-theme-img.png'
-
-      const containerClass = isDarkTheme
-        ? 'about-container about-container-dark'
-        : 'about-container about-container-light'
-
-      const headingClass = isDarkTheme
-        ? 'about-heading-dark'
-        : 'about-heading-light'
+      const aboutTextClassName = isDarkTheme
+        ? 'about-text-light'
+        : 'about-text-dark'
 
       return (
-        <div className={containerClass}>
-          <img src={aboutImageUrl} className="about-image" alt="about" />
-          <h1 className={headingClass}>About</h1>
-          <button
-            type="button"
-            className="theme-button"
-            data-testid="theme"
-            onClick={toggleTheme}
-          >
-            <img src={themeIconUrl} className="theme-img" alt="theme" />
-          </button>
+        <div className={`about-app-container ${aboutBgClassName}`}>
+          <Navbar />
+          <div className="about-page-container">
+            <div className="about-container">
+              <img className="about-image" src={aboutImageURL} alt="about" />
+              <h1 className={`about-heading ${aboutTextClassName}`}>About</h1>
+            </div>
+          </div>
         </div>
       )
     }}
@@ -42,3 +36,4 @@ const About = () => (
 )
 
 export default About
+
