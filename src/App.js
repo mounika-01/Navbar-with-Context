@@ -1,22 +1,40 @@
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom' // Updated from Routes to Switch
-import Navbar from './components/Navbar'
+import {Switch, Route} from 'react-router-dom'
+import {Component} from 'react'
+
+import ThemeContext from './context/ThemeContext'
 import Home from './components/Home'
 import About from './components/About'
 import NotFound from './components/NotFound'
-import {ThemeProvider} from './context/ThemeContext' // Corrected import for ThemeProvider
 
-function App() {
-  return (
-     <ThemeProvider>
-   <Router>
-     <Navbar /> {/* Navbar is rendered here, only once */}
-     <Switch>
-       <Route exact path="/" component={Home} />
-       <Route path="/about" component={About} />
-       <Route component={NotFound} />
-     </Switch>
-   </Router>
- </ThemeProvider>
-  )
+import './App.css'
+
+class App extends Component {
+  state = {
+    isDarkTheme: false,
+  }
+
+  toggleTheme = () => {
+    this.setState(prevState => ({isDarkTheme: !prevState.isDarkTheme}))
+  }
+
+  render() {
+    const {isDarkTheme} = this.state
+
+    return (
+      <ThemeContext.Provider
+        value={{
+          isDarkTheme,
+          toggleTheme: this.toggleTheme,
+        }}
+      >
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/about" component={About} />
+          <Route component={NotFound} />
+        </Switch>
+      </ThemeContext.Provider>
+    )
+  }
 }
+
 export default App
